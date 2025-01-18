@@ -36,6 +36,7 @@ const runnerNode = `(function(program, execJS) { execJS(program) })(function() {
 type Gode struct {
 	ctx    context.Context
 	source string
+	dir    string
 }
 
 // New returns a new Gode instance.
@@ -59,6 +60,11 @@ func NewWithContext(ctx context.Context, source ...string) (*Gode, error) {
 		return nil, err
 	}
 	return gode, nil
+}
+
+// WorkPath sets the working directory for the Gode instance.
+func (g *Gode) WorkPath(dir string) {
+	g.dir = dir
 }
 
 // Eval evaluates the given source code.
@@ -96,6 +102,9 @@ func (g *Gode) exec(source string) (interface{}, error) {
 
 	cmd := exec.CommandContext(g.ctx, "node")
 	cmd.Stdin = strings.NewReader(input)
+	if g.dir != "" {
+		cmd.Dir = g.dir
+	}
 
 	output, err := cmd.CombinedOutput()
 	if err != nil {
