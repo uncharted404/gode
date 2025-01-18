@@ -9,6 +9,10 @@ Node.js 的强大功能与 JavaScript 代码交互。
 
 ##### 需要 node.js 环境
 ##### go version >= 1.17
+```go
+go get -u github.com/uncharted404/gode
+import "github.com/uncharted404/gode"
+```
 
 #### 用法示例
 
